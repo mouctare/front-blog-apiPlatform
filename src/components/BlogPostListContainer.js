@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { blogPostListFetch } from "../actions/actions";
 import BlogPostList from "./BlogPostList";
-import Header from "./Header";
+//import Header from "./Header";
+import { Spinner } from "./Spinner";
 
 const BlogPostListContainer = () => {
   const postsList = useSelector((state) => state.postReducer);
@@ -13,10 +14,14 @@ const BlogPostListContainer = () => {
   useEffect(() => {
     dispatch(blogPostListFetch());
   }, [dispatch]);
+
+  if (isFetching) {
+    return <Spinner />;
+  }
+
   return (
     <div>
-      <Header />
-      <BlogPostList posts={posts} isFetching={isFetching} />
+      <BlogPostList posts={posts} />
     </div>
   );
 };
